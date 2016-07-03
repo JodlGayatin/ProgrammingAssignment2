@@ -2,37 +2,30 @@
 ## functions do
 
 ## Write a short comment describing this function
-## This function creates a matrix based on an input provided.
-makeVector <- function(x = numeric()) {
-            m <- NULL
+## This function creates a cache matrix based on an input provided.
+ makeCacheMatrix <- function(x = matrix()) {
+            inv <- NULL
             set <- function(y) {
-                    x <<- y
-                    m <<- NULL
-            }
+                        x <<- y
+                        inv <<- NULL
+                        }
             get <- function() x
-            setmean <- function(mean) m <<- mean
-            getmean <- function() m
-            list(set = set, get = get,
-                 setmean = setmean,
-                 getmean = getmean)
-    }
-
-
-makeCacheMatrix <- function(x = matrix()) {
-                m <- NULL
-                set <- function(y) {
-                        x <<-y
-                        m <<-NULL
+            setinverse <- function(inverse) inv <<- inverse
+            getinverse <- function() inv
+            list(set=set, get=get, setinverse=setinverse, getinverse=getinverse)
             }
-            get <- function () x
-            
-                
-
-}
-
-
-## Write a short comment describing this function
-
+## This function gets the inverse of the matrix
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
-}
+            inv <- x$getinverse()
+            if(!is.null(inv)) {
+                        message("getting cached data.")
+                        return(inv)
+                        }
+            data <- x$get()
+            inv <- solve(data)
+            x$setinverse(inv)
+            inv
+            
+            }
+
+
